@@ -1,23 +1,15 @@
-#!/usr/bin/python
-
+#!/usr/bin/python3
 """
-    This file contains the class / blueprint for the state objects which
-    inherits some of it's attributes and methods from the BaseModel class
+Defines the State class
 """
-
-import sys
-
-sys.path.append('/home/mohammed/Desktop/AirBnB_clone')
-
 from models.base_model import BaseModel
 
-class State(BaseModel):
-    """ Initializing attributes for the class State """
-    def __init__(self, name, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.name = name
-    
-if __name__ == '__main__':
-    state = State('Bazmul')
-    print(state.name)
 
+class State(BaseModel):
+    """Represent a state
+
+    Attributes:
+        name (str): The name of the state
+
+    """
+    name = ""

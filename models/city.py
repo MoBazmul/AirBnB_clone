@@ -1,25 +1,18 @@
-#!/usr/bin/python
-
+#!/usr/bin/python3
 """
-    This file contains the class / blueprint for the city objects which
-    inherits some of it's attributes and methods from the BaseModel class
+Defines the City class
 """
+from models.base_model import BaseModel
 
-import sys
 
-sys.path.append('/home/mohammed/Desktop/AirBnB_clone')
+class City(BaseModel):
+    """Represent a city
 
-from models.state import State
+    Attributes:
+        state_id (str): The state id.
+        name (str): The name of the city
 
-class City(State):
-    """ Initializes the attributes for the City class """
-    def __init__(self, name, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.state_id = State().uid
-        self.name = name
-        
-        
-if __name__ == '__main__':
-    city = City('Mombasa')
-    print(city)       
-        
+    """
+
+    state_id = ""
+    name = ""

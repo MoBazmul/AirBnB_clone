@@ -1,21 +1,19 @@
-#!/usr/bin/python
-
+#!/usr/bin/python3
 """
-    This file contains the class / blueprint for the review objects which
-    inherits some of it's attributes and methods from the BaseModel class
+Defines the Review class.
 """
+from models.base_model import BaseModel
 
-import sys
 
-sys.path.append('/home/mohammed/Desktop/AirBnB_clone')
+class Review(BaseModel):
+    """Represent a review
 
-from models.user import User
-from models.place import Place
+    Attributes:
+        place_id (str): The Place id
+        user_id (str): The User id
+        text (str): The text of the review
 
-class Review(Place):
-    """ Initializes the attributes for the Review class """
-    def __init__(self, text, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.place_id = Place().uid
-        self.user_id = Place().user_id
-        self.text = text
+    """
+    place_id = ""
+    user_id = ""
+    text = ""
