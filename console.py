@@ -137,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
             print("** dictionary missing **")
             return
         try:
-            update_dict = eval(args[2])
+            update_dict = eval(' '.join(args[2:]))  # Combine all arguments after the ID into a string
             if not isinstance(update_dict, dict):
                 raise SyntaxError
         except SyntaxError:
