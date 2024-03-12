@@ -2,14 +2,17 @@
 """
 Defines the State class
 """
+
+import sys
+
+sys.path.append('/home/mohammed/Desktop/AirBnB_clone')
+
 from models.base_model import BaseModel
 
-
 class State(BaseModel):
-    """Represent a state
-
-    Attributes:
-        name (str): The name of the state
-
-    """
-    name = ""
+    """State class inherits from BaseModel."""
+    
+    def __init__(self, *args, **kwargs):
+        """Initialize State instance."""
+        super().__init__(*args, **kwargs)
+        self.name = kwargs.get('name', "")

@@ -2,17 +2,18 @@
 """
 Defines the City class
 """
+
+import sys
+
+sys.path.append('/home/mohammed/Desktop/AirBnB_clone')
+
 from models.base_model import BaseModel
 
-
 class City(BaseModel):
-    """Represent a city
-
-    Attributes:
-        state_id (str): The state id.
-        name (str): The name of the city
-
-    """
-
-    state_id = ""
-    name = ""
+    """City class inherits from BaseModel."""
+    
+    def __init__(self, *args, **kwargs):
+        """Initialize City instance."""
+        super().__init__(*args, **kwargs)
+        self.state_id = kwargs.get('state_id', "")
+        self.name = kwargs.get('name', "")

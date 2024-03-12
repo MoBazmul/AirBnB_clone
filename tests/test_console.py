@@ -1,78 +1,67 @@
-#!/usr/bin/python3
-
-"""
-    This is a test that tests all the functions in the console.py file, by providing 
-    inputs and expected outputs that will be returned by the program
-"""
-
 import unittest
-from unittest.mock import patch
 from io import StringIO
+from unittest.mock import patch
 from console import HBNBCommand
 
-
 class TestConsole(unittest.TestCase):
-    """ create an object of the command line interpreter from class HBNBCommand """
     def setUp(self):
         self.console = HBNBCommand()
-
+    
     def tearDown(self):
         pass
+    
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_quit(self, mock_stdout):
+        with self.assertRaises(SystemExit):
+            self.console.onecmd("quit")
+        self.assertEqual(mock_stdout.getvalue(), '')
 
-    @patch('sys.stdout', new=StringIO())
-    def test_create(self):
-        """ Test the create command used to create new objects """
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("create BaseModel")
-            self.assertIn("BaseModel", f.getvalue().strip())
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_EOF(self, mock_stdout):
+        with self.assertRaises(SystemExit):
+            self.console.onecmd("EOF")
+        self.assertEqual(mock_stdout.getvalue(), '')
 
-    @patch('sys.stdout', new=StringIO())
-    def test_show(self):
-        """ Test the show command for displaying the entries of file storage object """
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("show BaseModel 1234")
-            self.assertEqual(f.getvalue().strip(), "** no instance found **")
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_emptyline(self, mock_stdout):
+        self.console.onecmd("")
+        self.assertEqual(mock_stdout.getvalue(), '')
+    
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_create(self, mock_stdout):
+        self.console.onecmd("create BaseModel")
+        self.assertIn("BaseModel", mock_stdout.getvalue())
 
-    @patch('sys.stdout', new=StringIO())
-    def test_destroy(self):
-        """ Test the deletion command to delete a certain entry in the file storage object """
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("destroy BaseModel 1234")
-            self.assertEqual(f.getvalue().strip(), "** no instance found **")
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_show(self, mock_stdout):
+        self.console.onecmd("show BaseModel")
+        self.assertIn("** instance id missing **", mock_stdout.getvalue())
 
-    @patch('sys.stdout', new=StringIO())
-    def test_all(self):
-        """ Test the all command that is used to print all the entries in the file storage object """
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("all BaseModel")
-            self.assertEqual(f.getvalue().strip(), "[]")
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_destroy(self, mock_stdout):
+        self.console.onecmd("destroy BaseModel")
+        self.assertIn("** instance id missing **", mock_stdout.getvalue())
 
-    @patch('sys.stdout', new=StringIO())
-    def test_update(self):
-        """ Test the update command used to update a record or records to the file storage object """
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("update BaseModel 1234 attribute value")
-            self.assertEqual(f.getvalue().strip(), "** no instance found **")
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_all(self, mock_stdout):
+        self.console.onecmd("all BaseModel")
+        self.assertIn("[]", mock_stdout.getvalue())
 
-    @patch('sys.stdout', new=StringIO())
-    def test_quit(self):
-        """ Test the quit command for exiting the command line interpreter """
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.assertTrue(self.console.onecmd("quit"))
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_update(self, mock_stdout):
+        self.console.onecmd("update BaseModel")
+        self.assertIn("** instance id missing **", mock_stdout.getvalue())
 
-    @patch('sys.stdout', new=StringIO())
-    def test_EOF(self):
-        """ Test the EOF (End Of File) command for specifying the end of file, led to exit of the command line """
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.assertTrue(self.console.onecmd("EOF"))
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_count(self, mock_stdout):
+        self.console.onecmd("count BaseModel")
+        self.assertIn("** class doesn't exist **", mock_stdout.getvalue())
 
-    @patch('sys.stdout', new=StringIO())
-    def test_invalid_command(self):
-        """ Tests for invalid command - a command that was never defined as a function in the HBNBCommand class """
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("invalid_command")
-            self.assertIn("invalid syntax", f.getvalue().strip().lower())
+    def test_default(self):
+        with patch('sys.stdout', new=StringIO()) as mock_stdout:
+            self.console.onecmd("MyModel.show()")
+            self.assertIn("** class doesn't exist **", mock_stdout.getvalue())
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
+

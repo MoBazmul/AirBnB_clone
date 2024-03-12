@@ -6,6 +6,10 @@
     based on the inputs provided
 """
 
+import sys
+
+sys.path.append('/home/mohammed/Desktop/AirBnB_clone')
+
 import unittest
 from unittest.mock import patch
 from io import StringIO
