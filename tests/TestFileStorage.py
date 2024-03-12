@@ -17,11 +17,14 @@ from unittest.mock import patch
 from models.base_model import BaseModel
 
 class TestFileStorage(unittest.TestCase):
+    """ Tests for the functionality of the FileStorage class """
     def setUp(self):
+        """ Initialize the storage object for the test cases """
         from models import storage
         return storage
 
     def tearDown(self):
+        """ Destroy the object file storage to empty file storage - with no data in it """
         from models import storage
         try:
             with open(storage, 'w') as f:
@@ -31,6 +34,7 @@ class TestFileStorage(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_new(self, mock_stdout):
+        """ Test the creation of new base class """
         from models import storage
         storage.new(BaseModel())
         self.assertTrue(len(storage.all()) == 1)
@@ -38,6 +42,7 @@ class TestFileStorage(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_save(self, mock_stdout):
+        """ Test the save method that save object to the file storage """
         from models import storage
         storage.new(BaseModel())
         storage.save()
@@ -48,6 +53,7 @@ class TestFileStorage(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_reload(self, mock_stdout):
+        """ Test the reload method """
         from models import storage
         storage.new(BaseModel())
         storage.save()
@@ -57,6 +63,7 @@ class TestFileStorage(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_reload_exception(self, mock_stdout):
+        """ Tets the reload exception of the reload method """
         from models import storage
         # Remove file to trigger FileNotFoundError
         try:
@@ -70,5 +77,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn("FileNotFoundError", mock_stdout.getvalue())
 
 if __name__ == '__main__':
+    """ Run the tests """
     unittest.main()
 

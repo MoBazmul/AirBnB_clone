@@ -60,3 +60,9 @@ class TestBaseModel(unittest.TestCase):
             self.base.updated_at = '14/12/202410:12:53.32663'
             print(self.base)
             self.assertEqual(f.getvalue().strip(), expected_output.strip())
+            
+            
+if __name__ == '__main__':
+    """ Run the tests """
+    unittest.main()
+            

@@ -1,5 +1,12 @@
 #!/usr/bin/python3
 
+""" This file defines the class FileStorage which is used to initialize the file
+to store data of objects that will be created via the command line"""
+
+import sys
+
+sys.path.append('/home/mohammed/Desktop/AirBnB_clone')
+
 import json
 import os
 from models.base_model import BaseModel
